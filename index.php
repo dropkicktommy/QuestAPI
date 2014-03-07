@@ -89,7 +89,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
       $expire = $_POST['expires'];
       $challenged_array = explode(', ', $challenged);
       // store new Challenge
-      print_r ($sql);
+//      print_r ($sql);
       $challenge = $db->createChallenge($created_by, $name, $longitude, $latitude, $challenged_array, $text, $photo, $video, $expire);
       if ($challenge) {
       	// Challenge stored successfully
@@ -191,7 +191,6 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
       $challenge_id = $_POST['ID'];
       error_log ($challenge_id);        	
       $challenge_id_array = explode(', ', $challenge_id);
-      error_log ($challenge_id_array);   	
      	// Retrieve challenge list
     	$syncAdd_challenges = $db->syncAddChallenges($user_id, $challenge_id_array);
       if ($syncAdd_challenges) {
