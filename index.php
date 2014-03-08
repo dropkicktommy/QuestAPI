@@ -210,9 +210,10 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
    else if ($tag == 'syncRem_challenges') {
    	// Request type is list challenges
       $user_id = $_POST['user'];
-      $challenge_id = $_POST['cid'];
+      $challenge_id = $_POST['ID'];
+      $challenge_id_array = explode(', ', $challenge_id);
      	// Remove challenge
-    	$syncRem_challenges = $db->syncRemChallenges($user_id, $challenge_id);
+    	$syncRem_challenges = $db->syncRemChallenges($user_id, $challenge_id_array);
       if ($syncRem_challenges) {
       	// Challenge removed successfully
          $response["success"] = 1;

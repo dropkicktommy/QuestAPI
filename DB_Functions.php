@@ -121,8 +121,8 @@ class DB_Functions {
      else {
 		  return false;
      }
-   }    
-   public function addNewFriend($user_id, $email) {
+    }
+    public function addNewFriend($user_id, $email) {
    	$result = mysql_query("SELECT email FROM user_info WHERE email = '$email'");        
       $no_of_rows = mysql_num_rows($result);
       if ($no_of_rows > 0) {
@@ -150,7 +150,7 @@ class DB_Functions {
       	// friend does not exist
          return false;
       }
-   }
+    }
 	public function listFriends($user_id) {
    	$result = mysql_query("SELECT f.user_unique_id, u.name, u.email, u.unique_id FROM user_info u JOIN friends f ON u.unique_id = f.friend_unique_id WHERE f.user_unique_id = '$user_id'");
       $no_of_rows = mysql_num_rows($result);
@@ -168,7 +168,7 @@ class DB_Functions {
       	return false;
       }     	
   	}
-   public function listChallenges($user_id) {
+    public function listChallenges($user_id) {
    	$result = mysql_query("SELECT s.friend_unique_id, c.challenge_id, c.name, u.name, c.longitude, c.latitude, s.accepted_at, s.time_to_expire FROM challenges c JOIN shared_challenges s ON c.challenge_id = s.challenge_id JOIN user_info u ON c.created_by_uid = u.unique_id WHERE s.friend_unique_id = '$user_id'");
       $no_of_rows = mysql_num_rows($result);
       if ($no_of_rows > 0) {
@@ -185,7 +185,7 @@ class DB_Functions {
       	return false;
       }
 	}
-   public function acceptChallenge($user_id, $challenge_id) {
+    public function acceptChallenge($user_id, $challenge_id) {
    	$result = mysql_query("UPDATE shared_challenges SET accepted_at = NOW() WHERE challenge_id = '$challenge_id' AND friend_unique_id = '$user_id'");
 		// check for successful store
 		if ($result) {
@@ -196,8 +196,8 @@ class DB_Functions {
       else {
       	return false;
       }
-   }
-   public function syncAddChallenges($user_id, $challenge_id_array) {
+    }
+    public function syncAddChallenges($user_id, $challenge_id_array) {
    	$challenge_id = "".implode(", ", $challenge_id_array)."";
    	error_log ($challenge_id);
    	$result = mysql_query("SELECT s.friend_unique_id, c.challenge_id, c.name, u.name, c.longitude, c.latitude, s.accepted_at, s.time_to_expire FROM challenges c JOIN shared_challenges s ON c.challenge_id = s.challenge_id JOIN user_info u ON c.created_by_uid = u.unique_id WHERE s.friend_unique_id = '$user_id' AND s.challenge_id NOT IN ('$challenge_id')");
@@ -218,22 +218,12 @@ class DB_Functions {
       	return false;
       }
 	}
-	public function updateSyncStatus($user_id, $challenge_id) {
-   	$result = mysql_query("UPDATE shared_challenges SET synced = 'true' WHERE challenge_id = '$challenge_id' AND friend_unique_id = '$user_id'");
+	public function syncRemChallenges($user_id, $challenge_id_array) {
+        $challenge_id = "".implode(", ", $challenge_id_array)."";
+        mysql_query("DELETE * FROM shared_challenges WHERE friend_unique_id = '$user_id' AND challenge_id = $challenge_id");
+        $result = mysql_query("SELECT * FROM shared_challenges WHERE friend_unique_id = '$user_id' AND challenge_id = $$challenge_id");
       $no_of_rows = mysql_num_rows($result);
-      if ($result) {
-      	// get challenge accepted details
-         return true;
-      }
-      else {
-      	return false;
-      }
-	}
-	public function syncRemChallenges($user_id, $challenge_id) {
-   	mysql_query("DELETE * FROM shared_challenges WHERE friend_unique_id = '$user_id' AND challenge_id = $challenge_id");
-		$result = mysql_query("SELECT * FROM   shared_challenges WHERE friend_unique_id = '$user_id' AND challenge_id = $challenge_id");      
-      $no_of_rows = mysql_num_rows($result);
-      if ($no_of_rows = 0) {
+      if ($no_of_rows == 0) {
       	// challenge successfully removed
          return true;
       }
