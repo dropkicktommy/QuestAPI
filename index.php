@@ -203,7 +203,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
       else {
       	// Failed to retrieve
          $response["error"] = 1;
-         $response["error_msg"] = "Error occurred while retrieving Challenges";
+         $response["error_msg"] = "No Challenges to update";
          echo json_encode($response);
       }   
    }
@@ -211,6 +211,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
    	// Request type is list challenges
       $user_id = $_POST['user'];
       $challenge_id = $_POST['ID'];
+      error_log ($challenge_id);
       $challenge_id_array = explode(', ', $challenge_id);
      	// Remove challenge
     	$syncRem_challenges = $db->syncRemChallenges($user_id, $challenge_id_array);
@@ -222,7 +223,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
       else {
       	// Failed to remove
          $response["error"] = 1;
-         $response["error_msg"] = "Error occurred while removing Challenges";
+         $response["error_msg"] = "No Challenges to remove";
          echo json_encode($response);
       }   
    }                  
