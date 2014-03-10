@@ -198,7 +198,7 @@ class DB_Functions {
       }
     }
     public function syncAddChallenges($user_id, $challenge_id_array) {
-   	$challenge_id = "".implode(", ", $challenge_id_array)."";
+   	$challenge_id = "'".implode("', '", $challenge_id_array)."'";
    	error_log ($challenge_id);
    	$result = mysql_query("SELECT s.friend_unique_id, c.challenge_id, c.name, u.name, c.longitude, c.latitude, s.accepted_at, s.time_to_expire FROM challenges c JOIN shared_challenges s ON c.challenge_id = s.challenge_id JOIN user_info u ON c.created_by_uid = u.unique_id WHERE s.friend_unique_id = '$user_id' AND s.challenge_id NOT IN ('$challenge_id')");
    	error_log ($result);      
