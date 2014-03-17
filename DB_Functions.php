@@ -169,7 +169,7 @@ class DB_Functions {
       }     	
   	}
     public function listChallenges($user_id) {
-   	$result = mysql_query("SELECT s.friend_unique_id, c.challenge_id, c.name, u.name, c.longitude, c.latitude, s.accepted_at, s.time_to_expire FROM challenges c JOIN shared_challenges s ON c.challenge_id = s.challenge_id JOIN user_info u ON c.created_by_uid = u.unique_id WHERE s.friend_unique_id = '$user_id'");
+   	$result = mysql_query("SELECT s.friend_unique_id, c.challenge_id, c.name, u.name, c.photo, c.longitude, c.latitude, s.accepted_at, s.time_to_expire FROM challenges c JOIN shared_challenges s ON c.challenge_id = s.challenge_id JOIN user_info u ON c.created_by_uid = u.unique_id WHERE s.friend_unique_id = '$user_id'");
       $no_of_rows = mysql_num_rows($result);
       if ($no_of_rows > 0) {
       	// challenges exist
