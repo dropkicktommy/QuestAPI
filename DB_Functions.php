@@ -220,7 +220,7 @@ class DB_Functions {
 	}
 	public function syncRemChallenges($user_id, $challenge_id_array) {
         $challenge_id = "'".implode("', '", $challenge_id_array)."'";
-        mysql_query("DELETE * FROM shared_challenges WHERE friend_unique_id = '$user_id' AND challenge_id IN ('$challenge_id')");
+        mysql_query("DELETE FROM shared_challenges WHERE friend_unique_id = '$user_id' AND challenge_id IN ('$challenge_id')");
         $result = mysql_query("SELECT * FROM shared_challenges WHERE friend_unique_id = '$user_id' AND challenge_id IN ('$challenge_id')");
       $no_of_rows = mysql_num_rows($result);
       if ($no_of_rows == 0) {
